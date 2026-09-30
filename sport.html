@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sport & Verslagen | J. Zeer Fotografie</title>
+    <style>
+        :root { 
+            --bg-color: #121212; 
+            --card-bg: #1e1e1e; 
+            --text-color: #e0e0e0; 
+            --accent-color: rgb(116, 172, 43); 
+            --max-width: 1100px; 
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; padding: 20px; }
+        
+        header { max-width: var(--max-width); margin: 0 auto 30px auto; text-align: center; padding: 40px 20px 30px 20px; border-bottom: 1px solid #333; position: relative; }
+        
+        /* Taalwisselaar met echte vlag-afbeeldingen rechtsboven in de header */
+        .lang-switch { position: absolute; top: 20px; right: 20px; display: flex; gap: 10px; align-items: center; }
+        .lang-switch a { cursor: pointer; opacity: 0.5; transition: opacity 0.2s, transform 0.2s; display: inline-block; }
+        .lang-switch a:hover, .lang-switch a.active-lang { opacity: 1; transform: scale(1.1); }
+        .lang-switch img { width: 24px; height: 16px; object-fit: cover; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.5); display: block; }
+        .lang-switch span.separator { color: #444; font-size: 0.8rem; }
+
+        header h1 { font-size: 2.5rem; color: var(--accent-color); margin-bottom: 15px; letter-spacing: 1px; }
+        header p { color: #aaa; font-size: 1.05rem; }
+        
+        nav { margin-top: 25px; display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; }
+        nav a { color: var(--accent-color); text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: opacity 0.2s; }
+        nav a:hover { opacity: 0.8; }
+        nav a.active { border-bottom: 2px solid var(--accent-color); padding-bottom: 2px; }
+        
+        main { max-width: var(--max-width); margin: 0 auto; }
+        .section-title { font-size: 1.5rem; margin-bottom: 20px; border-left: 4px solid var(--accent-color); padding-left: 10px; color: #fff; }
+        
+        /* Filter secties */
+        .filter-wrapper { margin-bottom: 25px; }
+        .filter-label { font-size: 0.9rem; color: #888; margin-bottom: 8px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; }
+        .filter-bar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 15px; }
+        
+        .filter-btn { background: transparent; border: 1px solid var(--accent-color); color: var(--text-color); padding: 6px 14px; border-radius: 20px; cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: all 0.2s; }
+        .filter-btn:hover, .filter-btn.active { background: var(--accent-color); color: #121212; }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; margin-bottom: 50px; }
+        .card { background-color: var(--card-bg); border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.5); transition: transform 0.2s; display: flex; flex-direction: column; justify-content: space-between; }
+        .card:hover { transform: translateY(-3px); }
+        
+        .card-img-container { width: 100%; height: 200px; overflow: hidden; background-color: #2a2a2a; }
+        .card-img-container img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+        .card:hover .card-img-container img { transform: scale(1.03); }
+
+        .card-content { padding: 20px; }
+        .card-content span { font-size: 0.85rem; color: var(--accent-color); text-transform: uppercase; font-weight: bold; }
+        .card-content h3 { font-size: 1.2rem; margin: 10px 0; color: #fff; }
+        .card-content p { color: #aaa; font-size: 0.95rem; margin-bottom: 15px; }
+        
+        .btn { display: inline-block; background: transparent; color: #fff; border: 1px solid var(--accent-color); padding: 8px 15px; border-radius: 4px; text-decoration: none; font-size: 0.85rem; transition: background 0.2s, color 0.2s; margin: 0 20px 20px 20px; width: fit-content; }
+        .btn:hover { background: var(--accent-color); color: #121212; font-weight: bold; }
+        
+        /* Footer Styling */
+        footer { 
+            max-width: var(--max-width); 
+            margin: 60px auto 20px auto; 
+            border-top: 1px solid #333; 
+            padding-top: 30px; 
+        }
+        .footer-inner {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+        .footer-search {
+            flex: 1;
+            min-width: 250px;
+            max-width: 350px;
+        }
+        .footer-search input { 
+            width: 100%; 
+            padding: 10px 15px; 
+            background-color: var(--card-bg); 
+            border: 1px solid #444; 
+            border-radius: 6px; 
+            color: #fff; 
+            font-size: 0.9rem; 
+            outline: none; 
+            transition: border-color 0.2s; 
+        }
+        .footer-search input:focus { border-color: var(--accent-color); }
+        
+        .footer-info {
+            text-align: right;
+        }
+        .footer-links { margin-bottom: 6px; font-size: 0.85rem; }
+        .footer-links a { color: #888; text-decoration: none; transition: color 0.2s; }
+        .footer-links a:hover { color: var(--accent-color); }
+
+        .footer-copy { color: #666; font-size: 0.85rem; }
+
+        /* Verberg de standaard Google Translate-balk en pop-ups */
+        .goog-te-banner-frame { display: none !important; }
+        body { top: 0px !important; }
+        #google_translate_element { display: none; }
+        .skiptranslate { display: none !important; }
+
+        @media (max-width: 768px) {
+            .footer-inner {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .footer-info {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Verborgen Google Translate Element vereist door de API -->
+    <div id="google_translate_element"></div>
+
+    <header>
+        <div class="lang-switch">
+            <a onclick="changeLanguage('nl')" id="lang-nl" class="active-lang" title="Nederlands">
+                <img src="https://flagcdn.com/w40/nl.png" alt="Nederlands">
+            </a>
+            <a onclick="changeLanguage('en')" id="lang-en" title="English">
+                <img src="https://flagcdn.com/w40/gb.png" alt="English">
+            </a>
+            <a onclick="changeLanguage('de')" id="lang-de" title="Deutsch">
+                <img src="https://flagcdn.com/w40/de.png" alt="Deutsch">
+            </a>
+        </div>
+        <h1 class="notranslate">J. ZEER FOTOGRAFIE</h1>
+        <p>Sportverslagen, motorsport en actiefoto's.</p>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="militaire-vliegtuigen.html">Militaire vliegtuigen</a>
+            <a href="reisverslagen.html">Reisverslagen</a>
+            <a href="evenementen.html">Evenementen</a>
+            <a href="sport.html" class="active">Sport</a>
+            <a href="archief.html">Archief</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2 class="section-title">Sport</h2>
+            
+            <!-- Sportsoort Filter -->
+            <div class="filter-wrapper">
+                <div class="filter-label">Categorie</div>
+                <div class="filter-bar" id="sport-filter-container">
+                    <button class="filter-btn active" onclick="filterBySport('all', event)">Alle Sporten</button>
+                    <button class="filter-btn" onclick="filterBySport('Racen', event)">Racen</button>
+                    <button class="filter-btn" onclick="filterBySport('Voetbal', event)">Voetbal</button>
+                    <button class="filter-btn" onclick="filterBySport('Wielrennen', event)">Wielrennen</button>
+                    <button class="filter-btn" onclick="filterBySport('Schaatsen', event)">Schaatsen</button>
+                    <button class="filter-btn" onclick="filterBySport('Beachvolleybal', event)">Beachvolleybal</button>
+                    <button class="filter-btn" onclick="filterBySport('Paardensport', event)">Paardensport</button>
+                    <button class="filter-btn" onclick="filterBySport('Overige', event)">Overige</button>
+                </div>
+            </div>
+
+            <!-- Jaar Filter -->
+            <div class="filter-wrapper">
+                <div class="filter-label">Jaartal</div>
+                <div class="filter-bar" id="year-filter-container">
+                    <button class="filter-btn active" onclick="filterByYear('all', event)">Alle Jaren</button>
+                </div>
+            </div>
+
+            <div class="grid" id="articles-container"></div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-search">
+                <input type="text" placeholder="Zoeken in deze site..." id="siteSearch">
+            </div>
+            <div class="footer-info">
+                <div class="footer-links">
+                    <a href="privacy.html">Privacyverklaring</a>
+                </div>
+                <p class="footer-copy">&copy; <span id="current-year">2026</span> J. Zeer fotografie. Alle rechten voorbehouden.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Google Translate Script Initialisatie -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'nl',
+                includedLanguages: 'nl,en,de',
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+
+        // Functie om taal te wijzigen via de vlaggen rechtsboven
+        function changeLanguage(langCode) {
+            var selectField = document.querySelector('.goog-te-combo');
+            if (selectField) {
+                selectField.value = langCode;
+                selectField.dispatchEvent(new Event('change'));
+                
+                // Actieve klasse bijwerken in de header
+                document.querySelectorAll('.lang-switch a').forEach(a => a.classList.remove('active-lang'));
+                document.getElementById('lang-' + langCode).classList.add('active-lang');
+            }
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <script>
+        // Automatisch het huidige jaar instellen in de footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        let allSportArticles = [];
+        let activeSport = 'all';
+        let activeYear = 'all';
+
+        fetch('index_archief.json')
+            .then(res => res.json())
+            .then(data => {
+                allSportArticles = data.filter(art => {
+                    const hasSportCat = art.categorieen && art.categorieen.some(c => c.toLowerCase() === 'sport');
+                    const hasSportProp = art.Sportsoort || art.sportsoort || art.sport;
+                    return hasSportCat || hasSportProp;
+                });
+
+                const years = [...new Set(allSportArticles.map(art => art.jaar))].filter(Boolean).sort((a, b) => b - a);
+                const yearFilterContainer = document.getElementById('year-filter-container');
+                
+                years.forEach(jaar => {
+                    const btn = document.createElement('button');
+                    btn.className = 'filter-btn';
+                    btn.innerText = jaar;
+                    btn.onclick = (e) => filterByYear(jaar, e);
+                    yearFilterContainer.appendChild(btn);
+                });
+
+                renderArticles(allSportArticles);
+            })
+            .catch(err => {
+                console.error('Fout bij laden:', err);
+                document.getElementById('articles-container').innerHTML = '<p style="color:#aaa;">Kon sportartikelen niet laden.</p>';
+            });
+
+        function filterBySport(sport, event) {
+            const parent = event.target.parentElement;
+            parent.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            activeSport = sport;
+            applyFilters();
+        }
+
+        function filterByYear(year, event) {
+            const parent = event.target.parentElement;
+            parent.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            activeYear = year;
+            applyFilters();
+        }
+
+        function applyFilters() {
+            let filtered = allSportArticles;
+
+            if (activeSport !== 'all') {
+                filtered = filtered.filter(art => {
+                    const sportVal = art.Sportsoort || art.sportsoort || art.sport;
+                    
+                    if (sportVal) {
+                        return String(sportVal).toLowerCase() === activeSport.toLowerCase();
+                    }
+                    
+                    if (Array.isArray(art.categorieen)) {
+                        return art.categorieen.some(c => c.toLowerCase() === activeSport.toLowerCase());
+                    }
+                    
+                    return activeSport === 'Overige';
+                });
+            }
+
+            if (activeYear !== 'all') {
+                filtered = filtered.filter(art => String(art.jaar) === String(activeYear));
+            }
+
+            renderArticles(filtered);
+        }
+
+        function renderArticles(articles) {
+            const container = document.getElementById('articles-container');
+            container.innerHTML = '';
+
+            if (articles.length === 0) {
+                container.innerHTML = '<p style="color:#aaa;">Geen sportverslagen gevonden voor deze selectie.</p>';
+                return;
+            }
+
+            articles.forEach(art => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                const articleUrl = `archief/${art.map_naam}/index.html`;
+                const coverImgUrl = `archief/${art.map_naam}/cover.jpg`;
+                
+                const sportLabel = art.Sportsoort || art.sportsoort || art.sport || '';
+                const badgeText = sportLabel ? `${sportLabel} • ` : '';
+
+                card.innerHTML = `
+                    <div class="card-img-container">
+                        <img src="${escapeHtml(coverImgUrl)}" alt="${escapeHtml(art.title)}" onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;400&quot; height=&quot;200&quot; style=&quot;background:%23222;fill:%23666;font-family:sans-serif;font-size:14px&quot;><text x=&quot;50%&quot; y=&quot;50%&quot; dominant-baseline=&quot;middle&quot; text-anchor=&quot;middle&quot;>Geen foto beschikbaar</text></svg>';">
+                    </div>
+                    <div class="card-content">
+                        <span>${escapeHtml(badgeText)}${escapeHtml(String(art.jaar))}</span>
+                        <h3>${escapeHtml(art.title)}</h3>
+                        <p>${escapeHtml(art.inhoud_preview)}</p>
+                    </div>
+                    <a href="${escapeHtml(articleUrl)}" class="btn">Lees verslag</a>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        }
+    </script>
+</body>
+</html>

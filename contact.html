@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | J. Zeer Fotografie</title>
+    <style>
+        :root { 
+            --bg-color: #121212; 
+            --card-bg: #1e1e1e; 
+            --text-color: #e0e0e0; 
+            --accent-color: rgb(116, 172, 43); 
+            --max-width: 1000px; 
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.7; padding: 20px; }
+        
+        header { 
+            max-width: var(--max-width); 
+            margin: 0 auto 30px auto; 
+            text-align: center; 
+            padding: 40px 20px 30px 20px; 
+            border-bottom: 1px solid #333; 
+            position: relative; 
+        }
+
+        /* Taalwisselaar met echte vlag-afbeeldingen rechtsboven in de header */
+        .lang-switch { position: absolute; top: 20px; right: 20px; display: flex; gap: 10px; align-items: center; }
+        .lang-switch a { cursor: pointer; opacity: 0.5; transition: opacity 0.2s, transform 0.2s; display: inline-block; }
+        .lang-switch a:hover, .lang-switch a.active-lang { opacity: 1; transform: scale(1.1); }
+        .lang-switch img { width: 24px; height: 16px; object-fit: cover; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.5); display: block; }
+        .lang-switch span.separator { color: #444; font-size: 0.8rem; }
+
+        header h1 { font-size: 2.2rem; color: var(--accent-color); margin-bottom: 15px; letter-spacing: 1px; }
+        header p { color: #aaa; font-size: 1.05rem; }
+        
+        nav { margin-top: 25px; display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; }
+        nav a { color: var(--accent-color); text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: opacity 0.2s; }
+        nav a:hover { opacity: 0.8; }
+        nav a.active { border-bottom: 2px solid var(--accent-color); padding-bottom: 2px; }
+        
+        main { max-width: var(--max-width); margin: 0 auto; }
+        .section-title { font-size: 1.5rem; margin-bottom: 20px; border-left: 4px solid var(--accent-color); padding-left: 10px; color: #fff; }
+        
+        .contact-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; margin-bottom: 50px; }
+        .contact-card { background-color: var(--card-bg); border-radius: 8px; padding: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); border: 1px solid #333; display: flex; flex-direction: column; justify-content: space-between; position: relative; }
+        
+        .contact-card h3 { font-size: 1.2rem; margin-bottom: 15px; color: #fff; }
+        .contact-card p { color: #aaa; font-size: 0.95rem; margin-bottom: 20px; }
+        
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-size: 0.85rem; color: #888; margin-bottom: 6px; font-weight: bold; text-transform: uppercase; }
+        .form-group input, .form-group textarea { width: 100%; padding: 10px; background-color: var(--bg-color); border: 1px solid #444; border-radius: 6px; color: #fff; font-size: 0.95rem; font-family: inherit; }
+        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--accent-color); }
+        .form-group textarea { resize: vertical; height: 120px; }
+        
+        /* Onzichtbaar veld voor bot-beveiliging (Honeypot) */
+        .bot-field { display: none !important; }
+
+        .btn { display: inline-block; background: transparent; color: #fff; border: 1px solid var(--accent-color); padding: 10px 20px; border-radius: 6px; text-decoration: none; font-size: 0.9rem; font-weight: bold; cursor: pointer; transition: background 0.2s, color 0.2s; width: fit-content; }
+        .btn:hover { background: var(--accent-color); color: #121212; }
+        
+        .privacy-note { font-size: 0.8rem; color: #777; margin-top: 12px; }
+        .privacy-note a { color: var(--accent-color); text-decoration: none; }
+        .privacy-note a:hover { text-decoration: underline; }
+
+        /* Pop-up / Succesmelding styling */
+        .success-message { display: none; background-color: rgba(116, 172, 43, 0.15); border: 1px solid var(--accent-color); color: #fff; padding: 20px; border-radius: 6px; margin-bottom: 20px; text-align: center; }
+        .success-message h4 { color: var(--accent-color); margin-bottom: 5px; font-size: 1.1rem; }
+
+        .social-link { display: inline-flex; align-items: center; gap: 8px; color: var(--accent-color); text-decoration: none; font-weight: 600; margin-top: 10px; }
+        .social-link:hover { text-decoration: underline; }
+
+        /* Footer Styling */
+        footer { 
+            max-width: var(--max-width); 
+            margin: 60px auto 20px auto; 
+            border-top: 1px solid #333; 
+            padding-top: 30px; 
+        }
+        .footer-inner {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+        .footer-search {
+            flex: 1;
+            min-width: 250px;
+            max-width: 350px;
+        }
+        .footer-search input { 
+            width: 100%; 
+            padding: 10px 15px; 
+            background-color: var(--card-bg); 
+            border: 1px solid #444; 
+            border-radius: 6px; 
+            color: #fff; 
+            font-size: 0.9rem; 
+            outline: none; 
+            transition: border-color 0.2s; 
+        }
+        .footer-search input:focus { border-color: var(--accent-color); }
+        
+        .footer-info {
+            text-align: right;
+        }
+        .footer-links { margin-bottom: 6px; font-size: 0.85rem; }
+        .footer-links a { color: #888; text-decoration: none; transition: color 0.2s; }
+        .footer-links a:hover { color: var(--accent-color); }
+
+        .footer-copy { color: #666; font-size: 0.85rem; }
+
+        /* Verberg de standaard Google Translate-balk en pop-ups */
+        .goog-te-banner-frame { display: none !important; }
+        body { top: 0px !important; }
+        #google_translate_element { display: none; }
+        .skiptranslate { display: none !important; }
+
+        @media (max-width: 768px) {
+            .footer-inner {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .footer-info {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Verborgen Google Translate Element vereist door de API -->
+    <div id="google_translate_element"></div>
+
+    <header>
+        <div class="lang-switch">
+            <a onclick="changeLanguage('nl')" id="lang-nl" class="active-lang" title="Nederlands">
+                <img src="https://flagcdn.com/w40/nl.png" alt="Nederlands">
+            </a>
+            <a onclick="changeLanguage('en')" id="lang-en" title="English">
+                <img src="https://flagcdn.com/w40/gb.png" alt="English">
+            </a>
+            <a onclick="changeLanguage('de')" id="lang-de" title="Deutsch">
+                <img src="https://flagcdn.com/w40/de.png" alt="Deutsch">
+            </a>
+        </div>
+        <h1 class="notranslate">J. ZEER FOTOGRAFIE</h1>
+        <p>Heb je vragen over foto's, opdrachten of samenwerkingen? Neem gerust contact op.</p>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="militaire-vliegtuigen.html">Militaire vliegtuigen</a>
+            <a href="reisverslagen.html">Reisverslagen</a>
+            <a href="evenementen.html">Evenementen</a>
+            <a href="sport.html">Sport</a>
+            <a href="archief.html">Archief</a>
+            <a href="contact.html" class="active">Contact</a>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2 class="section-title">Neem contact op</h2>
+            
+            <div class="contact-container">
+                <!-- Contactformulier -->
+                <div class="contact-card">
+                    <div>
+                        <h3>Stuur een bericht</h3>
+                        <p>Vul onderstaand formulier in en ik neem zo snel mogelijk contact met je op.</p>
+                        
+                        <!-- Succes pop-up / melding box -->
+                        <div id="formResult" class="success-message">
+                            <h4>Bedankt voor je bericht!</h4>
+                            <p style="margin: 0; color: #ddd;">Je bericht is succesvol verzonden. Ik neem snel contact met je op.</p>
+                        </div>
+
+                        <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+                            <!-- Web3Forms Access Key -->
+                            <input type="hidden" name="access_key" value="6a874b50-3bce-4065-8af9-cf471983e07f">
+
+                            <!-- Honeypot Anti-Spam Veld -->
+                            <input type="checkbox" name="botcheck" class="bot-field" style="display: none;">
+
+                            <div class="form-group">
+                                <label for="name">Je naam</label>
+                                <input type="text" id="name" name="name" required placeholder="Jouw naam">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Je e-mailadres</label>
+                                <input type="email" id="email" name="email" required placeholder="jouw@email.nl">
+                            </div>
+                            <div class="form-group">
+                                <label for="subject">Onderwerp</label>
+                                <input type="text" id="subject" name="subject" required placeholder="Waar gaat je bericht over?">
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Bericht</label>
+                                <textarea id="message" name="message" required placeholder="Typ hier je bericht..."></textarea>
+                            </div>
+                            
+                            <button type="submit" id="submitBtn" class="btn">Verstuur bericht</button>
+                            
+                            <div class="privacy-note">
+                                Door dit formulier te versturen ga je akkoord met de verwerking van je persoonsgegevens voor het beantwoorden van je bericht. Zie ook de <a href="privacy.html">privacyverklaring</a>.
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Instagram / Social Media kaartje -->
+                <div class="contact-card">
+                    <div>
+                        <h3>Volg mijn werk</h3>
+                        <p>Naast deze website deel ik regelmatig updates, nieuwe foto's en achtergrondverhalen van mijn avonturen en evenementen op Instagram.</p>
+                        <p>Kom je liever via social media in contact? Stuur gerust een berichtje via mijn kanaal:</p>
+                        
+                        <a href="https://www.instagram.com" target="_blank" class="social-link">
+                            Bekijk mijn Instagram &rarr;
+                        </a>
+                    </div>
+                    <div style="margin-top: 30px;">
+                        <p style="font-size: 0.85rem; color: #777;">Alle foto's en verslagen op deze website vallen onder auteursrecht, tenzij anders overeengekomen.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-search">
+                <input type="text" placeholder="Zoeken in deze site..." id="siteSearch">
+            </div>
+            <div class="footer-info">
+                <div class="footer-links">
+                    <a href="privacy.html">Privacyverklaring</a>
+                </div>
+                <p class="footer-copy">&copy; <span id="current-year">2026</span> J. Zeer fotografie. Alle rechten voorbehouden.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Google Translate Script Initialisatie -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'nl',
+                includedLanguages: 'nl,en,de',
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+
+        function changeLanguage(langCode) {
+            var selectField = document.querySelector('.goog-te-combo');
+            if (selectField) {
+                selectField.value = langCode;
+                selectField.dispatchEvent(new Event('change'));
+                
+                document.querySelectorAll('.lang-switch a').forEach(a => a.classList.remove('active-lang'));
+                document.getElementById('lang-' + langCode).classList.add('active-lang');
+            }
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <!-- JavaScript voor geruisloze verzending via AJAX en jaar in footer -->
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        const form = document.getElementById('contactForm');
+        const result = document.getElementById('formResult');
+        const submitBtn = document.getElementById('submitBtn');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const object = Object.fromEntries(formData);
+            const json = JSON.stringify(object);
+
+            submitBtn.textContent = "Bezig met verzenden...";
+            submitBtn.style.opacity = "0.7";
+            submitBtn.disabled = true;
+
+            fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: json
+                })
+                .then(async (response) => {
+                    let jsonResponse = await response.json();
+                    if (response.status == 200) {
+                        result.style.display = "block";
+                        form.style.display = "none";
+                    } else {
+                        console.log(jsonResponse);
+                        alert("Oeps, er ging iets mis. Probeer het later opnieuw.");
+                        submitBtn.textContent = "Verstuur bericht";
+                        submitBtn.style.opacity = "1";
+                        submitBtn.disabled = false;
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                    alert("Er is een netwerkfout opgetreden.");
+                    submitBtn.textContent = "Verstuur bericht";
+                    submitBtn.style.opacity = "1";
+                    submitBtn.disabled = false;
+                });
+        });
+    </script>
+
+</body>
+</html>
